@@ -45,6 +45,14 @@ html,body {
   }
 }
 
+.big-divider {
+  background: #EFECEC;
+  border-bottom: 3px solid #D4CECE;
+  width: 100%;
+  height: 8px;
+  margin: 50px auto;
+}
+
 .table-attempts {
   height: $max-attempts-height;
   overflow-y: auto;
@@ -74,4 +82,27 @@ html,body {
   .input-chat {
     padding: 30px 20px 0 20px;
   }
+}
+
+/* Portrait and Landscape */
+@media only screen and (max-width: 768px) {
+
+  $max-attempts-height: 200px;
+  $player-height: 120px;
+
+  $max-chat-height: 200px; /* $max-attempts-height + $player-height - 56 */
+
+  .player {
+    height: $player-height;
+  }
+
+  .table-attempts {
+    height: $max-attempts-height;
+    overflow-y: auto;
+  }
+
+  .chat .messages {
+    max-height: $max-chat-height;
+  }
+
 }
