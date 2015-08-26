@@ -52,7 +52,7 @@ Game:
             <input type="text" ng-model="checkNumberInput" class="form-control" placeholder="Guess the number" 
               ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button"
+              <button class="btn btn-default" type="submit"
                 ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">Check</button>
             </span>
           </div><!-- /input-group -->
@@ -100,7 +100,7 @@ Game:
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Spam here...">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Check</button>
+            <button class="btn btn-default" type="submit">Check</button>
           </span>
         </div><!-- /input-group -->
       </div>
