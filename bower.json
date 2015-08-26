@@ -21,6 +21,8 @@
     "animate.css": "~3.2.0",
     "firebase": "~2.2.9",
     "angularfire": "~1.1.2",
-    "angular-cookie": "~4.0.9"
+    "angular-cookie": "~4.0.9",
+    "momentjs": "~2.10.6",
+    "moment": "~2.10.6"
   }
 }
