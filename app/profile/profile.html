@@ -1,0 +1,7 @@
+Profile
+
+<a ng-click="logout()">Logout</a>
+
+<ul>
+<li ng-repeat="game in user.games" ng-hide="{{ game == 'empty' }}">{{ game.players[1].name }} vs {{ game.players[2].name }} <a href="#/game/multyplayer/{{ game.id }}">Go to game</a></li>
+</ul>

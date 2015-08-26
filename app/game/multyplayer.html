@@ -1,0 +1,111 @@
+Multyplayer game here
+
+<div ng-show="game.gameRef.turn == game.player && game.gameRef.turn != 0">Your Turn</div>
+<div ng-show="game.gameRef.turn != game.player && game.gameRef.turn != 0">Oponent Turn</div>
+
+<div ng-show="game.player == 1 && game.gameRef.turn == 0">Oponent should  accept and start the game</div>
+<div ng-show="game.player == 2 && game.gameRef.turn == 0">
+  You should  accept and start the game
+
+  <div>
+    Your number:
+    <br />
+    <input type="number" ng-model="acceptGame.number1" min="1" max="9" ng-change="checkNewGameNumberInput('acceptGame')" />
+    <input type="number" ng-model="acceptGame.number2" min="1" max="9" ng-change="checkNewGameNumberInput('acceptGame')" />
+    <input type="number" ng-model="acceptGame.number3" min="1" max="9" ng-change="checkNewGameNumberInput('acceptGame')" />
+    <input type="number" ng-model="acceptGame.number4" min="1" max="9" ng-change="checkNewGameNumberInput('acceptGame')" />
+  </div>
+
+  <div ng-show="acceptGame.isNumberValid">
+    <button class="btn btn-primary btn-lg" ng-click="acceptNewGame(game, acceptGame)">Start Game</button>
+  </div>
+</div>
+
+Game: 
+
+<div ng-show="game.gameRef.status == 1">
+  <!-- Game block here-->
+  <div class="row">
+    <div class="col-sm-4 col-lg-3">
+      Player 1
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Number</th>
+            <th class="text-center">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="attempt in game.gameRef.players[game.player].attempts">
+            <td>{{ $index }}</td>
+            <td>{{ attempt.number }}</td>
+            <td>{{ attempt.result }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row">
+        <form ng-submit="checkNumber(game, checkNumberInput)">
+          <div class="input-group">
+            <input type="text" ng-model="checkNumberInput" class="form-control" placeholder="Guess the number" 
+              ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button"
+                ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">Check</button>
+            </span>
+          </div><!-- /input-group -->
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-1 col-lg-1 hidden-xs">
+      
+    </div>
+    <div class="col-sm-4 col-lg-3 ">
+      Player 2
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Number</th>
+            <th class="text-center">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="attempt in game.gameRef.players[game.oponent].attempts">
+            <td>{{ $index }}</td>
+            <td>{{ attempt.number }}</td>
+            <td>{{ attempt.result }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col-sm-1 col-lg-1"></div>
+    <div class="col-sm-3 col-lg-3">
+      Chat here
+
+      <ul>
+        <li><strong>username:</strong> Съобщение</li>
+        <li><strong>username:</strong> Съобщение</li>
+        <li><strong>username:</strong> Съобщение</li>
+        <li><strong>username:</strong> Съобщение</li>
+        <li><strong>username:</strong> Съобщение</li>
+        <li><strong>username:</strong> Съобщение</li>
+      </ul>
+
+      <div class="row">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Spam here...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Check</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
+
+    </div>
+  </div>
+
+</div>

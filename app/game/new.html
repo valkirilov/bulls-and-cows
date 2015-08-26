@@ -1,0 +1,20 @@
+New game
+
+<div>
+  Step 1:
+  <br />
+  <input type="number" ng-model="newGame.number1" min="1" max="9" ng-change="checkNewGameNumberInput('newGame')" />
+  <input type="number" ng-model="newGame.number2" min="1" max="9" ng-change="checkNewGameNumberInput('newGame')" />
+  <input type="number" ng-model="newGame.number3" min="1" max="9" ng-change="checkNewGameNumberInput('newGame')" />
+  <input type="number" ng-model="newGame.number4" min="1" max="9" ng-change="checkNewGameNumberInput('newGame')" />
+</div>
+
+<div ng-show="newGame.isNumberValid">
+  Step 2:
+  <input type="text" ng-model="newGame.oponent" typeahead="friend.name for friend in friendsList | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedPlayer($item)">
+</div>
+
+<div ng-show="newGame.isOponentValid">
+  Step 3:
+  <button class="btn btn-primary btn-lg" ng-click="startNewGame()">Start Game</button>
+</div>
