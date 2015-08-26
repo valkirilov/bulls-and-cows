@@ -32,10 +32,7 @@ angular.module('myApp.game', ['ui.router'])
   };
 
   $scope.checkNewGameNumberInput = function(input) {
-    if (isNumberValid($scope[input].number1) &&
-      isNumberValid($scope[input].number2) &&
-      isNumberValid($scope[input].number3) &&
-      isNumberValid($scope[input].number4)) {
+    if (isNumberValid($scope[input].number)) {
       $scope[input].isNumberValid = true;
     }
     else {
@@ -57,23 +54,14 @@ angular.module('myApp.game', ['ui.router'])
     
     // Set player 1, the host
     var player1 = AuthService.getPlayerFromUser($rootScope.user); 
-    player1.number = {
-      number1: $scope.newGame.number1,
-      number2: $scope.newGame.number2,
-      number3: $scope.newGame.number3,
-      number4: $scope.newGame.number4
-    };
+    player1.number = $scope.newGame.number;
 
     $scope.newGame.players[1] = player1;
     $scope.newGame.winner = 0;
     $scope.newGame.turn = 0;
 
     // Unset some variables
-    delete $scope.newGame.number1;
-    delete $scope.newGame.number2;
-    delete $scope.newGame.number3;
-    delete $scope.newGame.number4;
-
+    delete $scope.newGame.number;
     delete $scope.newGame.isNumberValid;
     delete $scope.newGame.isOponentValid;
     delete $scope.newGame.oponent;
@@ -81,36 +69,43 @@ angular.module('myApp.game', ['ui.router'])
     GameService.newGame($scope.newGame);
   };
 
-  $scope.acceptNewGame = function(game, number) {
+  $scope.acceptNewGame = function(game, acceptGame) {
     console.log(game);
 
     game.gameRef.status = 1;
     game.gameRef.turn = 2;
 
     // Set the number of player 2, the accepter
-    game.gameRef.players[2].number = {
-      number1: number.number1,
-      number2: number.number2,
-      number3: number.number3,
-      number4: number.number4
-    };
-
+    game.gameRef.players[2].number = acceptGame.number;
     GameService.updateGameState(game.gameRef);
   };
 
   $scope.checkNumber = function(game, number) {
+
+    if (!isNumberValid(number)) {
+      return;
+    }
+
+    // Get the rsult of this number
+    var result = GameService.checkNumber(game, number);
+
     //Add the new attempt
     var attempt = {
       number: number,
-      result: 'soon'
+      result: result
     };
     game.gameRef.players[game.player].attempts.push(attempt);
     game.gameRef.turn = game.oponent;
 
     $scope.checkNumberInput = '';
 
-
-    console.log(game);
+    // Check is the attemp fully correct
+    if (result.bulls === 4) {
+      console.log('Winner');
+      game.gameRef.turn = 3;
+      game.gameRef.winner = game.player;
+      game.gameRef.status = 2;
+    }
 
     GameService.updateGameState(game.gameRef);
   };
@@ -126,13 +121,17 @@ angular.module('myApp.game', ['ui.router'])
   });
 
   var isNumberValid = function(number) {
-    if (number >= 1 && number <=9) {
+    if (number.toString().length === 4 && isNumeric(number)) {
       return true;
     }
     else {
       return false;
     }
   };
+
+  function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
 
   init();
 

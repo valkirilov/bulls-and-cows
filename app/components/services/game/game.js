@@ -59,19 +59,69 @@ angular.module('myApp.services.game', [])
     var game = {
       gameRef: gameRef
     };
-
-    //gamesList.$save(game);
     
     game.player = getPlayerPosition(gameRef);
     game.oponent = getOponentPosition(gameRef);
     game.isYourTurn = game.gameRef.turn === game.player;
     
-    console.log(game);
     return game;
   };
 
   var updateGameState = function(game) {
     gamesList.$save(game);
+  };
+
+  var checkNumber = function(game, number) {
+    var oponentNumber = game.gameRef.players[game.oponent].number.toString(),
+        guessNumber = number.toString();
+
+    var result = {
+      bulls: 0,
+      cows: 0
+    };
+
+    // Count the bulls
+    if (guessNumber[0] == oponentNumber[0]) {
+      result.bulls++;
+      guessNumber = guessNumber.replaceAt(0, "x");
+      oponentNumber = oponentNumber.replaceAt(0, "x");
+    }
+    if (guessNumber[1] == oponentNumber[1]) {
+      result.bulls++;
+      guessNumber = guessNumber.replaceAt(1, "x");
+      oponentNumber = oponentNumber.replaceAt(1, "x");
+    }
+    if (guessNumber[2] == oponentNumber[2]) {
+      result.bulls++;
+      guessNumber = guessNumber.replaceAt(2, "x");
+      oponentNumber = oponentNumber.replaceAt(2, "x");
+    }
+    if (guessNumber[3] == oponentNumber[3]) {
+      result.bulls++;
+      guessNumber = guessNumber.replaceAt(3, "x");
+      oponentNumber = oponentNumber.replaceAt(3, "x");
+    }
+     
+    // Count the cows
+    var i, j, occurances, counted = [];
+    for (i=0; i<guessNumber.length; i++) {
+      if (guessNumber[i] === 'x')
+        continue;
+
+      if (counted.indexOf(guessNumber[i]) > -1)
+        continue;
+
+      j = 0;
+      occurances = 0;
+      for (j=0; j<oponentNumber.length; j++) {
+        if (guessNumber[i] == oponentNumber[j]) {
+          occurances++;
+        }
+      }
+      result.cows += occurances;
+    }
+     
+    return result;
   };
 
   var getPlayerPosition = function(game) {
@@ -107,10 +157,15 @@ angular.module('myApp.services.game', [])
     };
   };
 
+  String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+  };
+
   return {
     init: init,
     newGame: newGame,
     loadGame: loadGame,
-    updateGameState: updateGameState
+    updateGameState: updateGameState,
+    checkNumber: checkNumber
   };
 });

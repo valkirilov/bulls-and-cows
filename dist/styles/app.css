@@ -1,2 +1,2 @@
-
+html,body{height:100%;margin:0px;padding:0px}#main-container{height:100%;position:relative;padding-top:100px}.player{height:150px}.player .avatar img{max-width:64px}.player .details{padding:15px}.player .details p{margin:0px}.table-attempts{height:450px;overflow-y:auto}.input-attempt{padding:30px 20px 0 20px}.chat{border-left:3px solid #EFECEC;padding-left:30px}.chat .messages{max-height:544px;overflow-y:auto}.chat ul{padding:0;font-size:12px;font-size:1.2rem}.chat ul li{list-style:none}.chat .input-chat{padding:30px 20px 0 20px}
 /*# sourceMappingURL=app.css.map */

@@ -1,0 +1,77 @@
+$max-attempts-height: 450px;
+$player-height: 150px;
+
+$max-chat-height: 544px; /* $max-attempts-height + $player-height - 56 */
+
+@function calculateRem($size) {
+  $remSize: $size / 10px;
+  @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+html,body { 
+  height: 100%; 
+  margin: 0px; 
+  padding: 0px; 
+}
+
+#main-container {
+  height: 100%;
+  position: relative;
+
+  padding-top: 100px;
+}
+
+.full-height {
+  /* height: 100%; */
+}
+
+.player {
+  height: $player-height;
+  .avatar img {
+    max-width: 64px;
+  }
+
+  .details {
+    padding: 15px;
+  }
+
+  .details p {
+    margin: 0px;
+  }
+}
+
+.table-attempts {
+  height: $max-attempts-height;
+  overflow-y: auto;
+}
+
+.input-attempt {
+  padding: 30px 20px 0 20px;
+}
+
+.chat {
+  border-left: 3px solid #EFECEC;
+  padding-left: 30px;
+
+  .messages {
+    max-height: $max-chat-height;
+    overflow-y: auto;
+  }
+
+  ul {
+    padding: 0;
+    @include font-size(12px);
+    li {
+      list-style: none;
+    }
+  }
+
+  .input-chat {
+    padding: 30px 20px 0 20px;
+  }
+}
