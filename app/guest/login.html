@@ -1,17 +1,54 @@
 <div class="container">
 
-  <form class="form-signin" ng-submit="login()">
-    <h2 class="form-signin-heading">Please sign in</h2>
+  <div class="row">
+    
+    <div class="col-sm-6 col-md-8">
+      
+      <h1>Some cool title here</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet scelerisque urna. Proin fringilla felis sed lorem pharetra scelerisque. In et massa varius, laoreet neque eu, suscipit lorem. Mauris mattis semper suscipit. Phasellus ullamcorper mi at turpis accumsan, id interdum massa ultricies. Maecenas quis nulla at dolor efficitur lobortis. Mauris in quam tortor. Quisque iaculis, quam a viverra scelerisque, risus augue porttitor ante, nec viverra turpis nulla vitae ligula. Nullam non quam nec est molestie ultricies id a leo. Proin nec nisi sed lorem aliquet tincidunt at in odio. Fusce volutpat in risus ac sollicitudin. Nunc sed eros eros. Aenean consequat sit amet odio vestibulum tempor.</p>
+      <p class="hidden-xs">Etiam et posuere massa. Pellentesque efficitur ligula nec nulla vehicula maximus. Duis erat elit, aliquam sed efficitur et, egestas vitae orci. Sed tincidunt nec ligula quis aliquet. Ut condimentum eros sed lacus cursus ultrices. Aliquam ornare faucibus scelerisque. Fusce ultrices maximus cursus. Cras hendrerit ante quis arcu pretium ullamcorper. In felis justo, iaculis id faucibus sed, tempus vel nulla. Suspendisse sit amet dui non diam laoreet venenatis. Mauris mauris est, fringilla ut neque a, venenatis pulvinar eros. Maecenas at suscipit enim.</p>
+      <p class="hidden-xs">In at hendrerit sapien, quis malesuada tortor. Praesent dictum iaculis dolor. Donec egestas condimentum justo sed gravida. Maecenas eu posuere ex, ac feugiat lectus. Vestibulum tincidunt tincidunt sapien, ac pulvinar turpis pulvinar et. In eu dignissim ipsum. Nam rhoncus scelerisque neque id suscipit. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+      
+    </div>
+    <div class="col-sm-6 col-md-4">
 
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="text" id="inputEmail" ng-model="loginInput.email" class="form-control" placeholder="Email address" required autofocus>
+      <div class="panel panel-default panel-login">
+        <div class="panel-body">
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" ng-model="loginInput.password" class="form-control" placeholder="Password" required>
+          <form class="form-signin" ng-submit="login()">
+            <h2 class="form-signin-heading text-center" data-translate>Login</h2>
 
-    <br />
+            <div class="form-group {{ loginError.email ? 'has-error' : '' }}">
+              <label for="inputEmail" class="sr-only" data-translate>Email address</label>
+              <label for="inputEmail" class="control-label" ng-show="loginError.email">Incorrect email address</label>
+              <input type="text" id="inputEmail" ng-model="loginInput.email" class="form-control form-margin" placeholder="{{ 'Email address' | translate }}" required autofocus>
+            </div>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  </form>
+            <div class="form-group {{ loginError.password ? 'has-error' : '' }}">
+              <label for="inputPassword" class="sr-only" data-translate>Password</label>
+              <label for="inputPassword" class="control-label" ng-show="loginError.password">Wrong password</label>
+              <input type="password" id="inputPassword" ng-model="loginInput.password" class="form-control form-margin" placeholder="{{ 'Password' | translate }}" required>
+            </div>
+            
+            <p class="alert alert-danger" ng-show="loginError.other">{{ loginError.other }}<br /></p>
+            <br />
+
+            <button class="btn btn-primary btn-block" type="submit" data-translate ng-disabled="isLogging">Sign in</button>
+            <div class="clearfix"></div>
+
+            <p class="hr-separator">or if you have problems try to</p>
+
+            <div class="row">
+              <div class="col-sm-6"><button class="btn btn-default btn-block form-margin" data-translate ng-disabled="true">Reset password</button></div>
+              <div class="col-sm-6"><button class="btn btn-default btn-block form-margin" data-translate ng-disabled="true">Register</button></div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 
 </div> <!-- /container -->

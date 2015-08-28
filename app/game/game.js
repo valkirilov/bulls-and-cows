@@ -29,6 +29,18 @@ angular.module('myApp.game', ['ui.router'])
 
   var init = function() {
     $scope.friendsList = AuthService.getFriends();
+
+    if ($rootScope.$state.current.name === 'game-multyplayer') {
+      // If we are on a route with a game param we should load it
+      if ($rootScope.isGamesListLoaded) {
+        // If the app is already loaded and the list of games is fetched, load the current game
+        $rootScope.initGame($rootScope.$state.params.gameId);
+      }
+      else {
+        // If this is the first init of the controller, we should wait for the loading of the games
+        $rootScope.initGameAfterLoad = true;
+      }
+    }
   };
 
   $scope.checkNewGameNumberInput = function(input) {
@@ -39,6 +51,32 @@ angular.module('myApp.game', ['ui.router'])
       $scope[input].isNumberValid = false; 
 
     }
+  };
+
+  /**
+   * Chooseing player from the suggestions list
+   * @param  {[type]} player [description]
+   * @return {[type]}        [description]
+   */
+  $scope.choosePlayer = function(player) {
+    $scope.newGame.oponent = player.name;
+    $scope.selectedPlayer(player);
+  };
+
+  /**
+   * Check the validity of the entered player
+   * @return {[type]} [description]
+   */
+  $scope.checkPlayer = function() {
+    var isValid = false;
+
+    $scope.friendsList.forEach(function(friend) {
+      if ($scope.newGame.oponent === friend.name) {
+        isValid = true;
+      }
+    });
+
+    $scope.newGame.isOponentValid = isValid;
   };
 
   $scope.selectedPlayer = function(player) {
@@ -110,13 +148,14 @@ angular.module('myApp.game', ['ui.router'])
     GameService.updateGameState(game.gameRef);
   };
 
-  $scope.initGame = function(gameId) {
+  $rootScope.initGame = function(gameId) {
     $scope.game = GameService.loadGame(gameId); 
   };
 
-  $scope.$on('$viewContentLoaded', function(param1, param2){
+  //$scope.$on('$viewContentLoaded', function(param1, param2) {
+  $scope.$on('$routeChangeSuccess', function(param1, param2) {
     if ($rootScope.$state.current.name === 'game-multyplayer') {
-      $scope.initGame($rootScope.$state.params.gameId);
+      $rootScope.initGame($rootScope.$state.params.gameId);
     }
   });
 

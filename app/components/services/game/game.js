@@ -12,7 +12,11 @@ angular.module('myApp.services.game', [])
     gamesList = $firebaseArray(firebaseRef);
 
     gamesList.$loaded(function(data) {
-      console.log(data);
+      $rootScope.isGamesListLoaded = true;
+      
+      if ($rootScope.initGameAfterLoad) {
+        $rootScope.initGame($rootScope.$state.params.gameId);
+      }
     });
 
   };

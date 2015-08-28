@@ -3,3 +3,91 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
+
+#: app/index.html
+msgid "About"
+msgstr ""
+
+#: app/game/multyplayer.html
+msgid "Accept New Game"
+msgstr ""
+
+#: app/index.html
+msgid "Bulls and Cows"
+msgstr ""
+
+#: app/guest/login.html
+msgid "Email address"
+msgstr ""
+
+#: app/index.html
+msgid "Home"
+msgstr ""
+
+#: app/game/new.html
+msgid "How to play Bulls and Cows?"
+msgstr ""
+
+#: app/game/new.html
+msgid "If you are not familar with the rules of the game we suggest you to read them here:"
+msgstr ""
+
+#: app/index.html
+#: app/guest/login.html
+msgid "Login"
+msgstr ""
+
+#: app/index.html
+msgid "New Game"
+msgstr ""
+
+#: app/game/new.html
+msgid "Oponent name"
+msgstr ""
+
+#: app/guest/login.html
+msgid "Password"
+msgstr ""
+
+#: app/guest/login.html
+msgid "Register"
+msgstr ""
+
+#: app/guest/login.html
+msgid "Reset password"
+msgstr ""
+
+#: app/guest/login.html
+msgid "Sign in"
+msgstr ""
+
+#: app/game/multyplayer.html
+#: app/game/new.html
+msgid "Start Game"
+msgstr ""
+
+#: app/game/new.html
+msgid "Step 1"
+msgstr ""
+
+#: app/game/new.html
+msgid "Step 2"
+msgstr ""
+
+#: app/game/new.html
+msgid "Step 3"
+msgstr ""
+
+#: app/game/multyplayer.html
+#: app/game/new.html
+msgid "Your 4 digit number"
+msgstr ""
+
+#: app/game/multyplayer.html
+msgid "should accept and start the game. Please wait ^_^"
+msgstr ""
+
+#: app/game/multyplayer.html
+#: app/game/new.html
+msgid "Намислете си четирицифрено число, такова че да затрудните максимално противника ви в опитите му да го разгадае:"
+msgstr ""

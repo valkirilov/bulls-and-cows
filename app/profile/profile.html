@@ -28,12 +28,22 @@
     </ul>
   </div>
   <div class="col-sm-9">
-    <h1>Recent Games</h1>
-    <ul>
-      <li ng-repeat="game in user.games" ng-hide="{{ game == 'empty' }}">
-        {{ game.players[1].name }} vs {{ game.players[2].name }} 
-        <a href="#/game/multyplayer/{{ game.id }}">Go to game</a>
-      </li>
-    </ul>    
+
+    <div class="panel panel-default panel-login">
+      <div class="panel-body">
+
+        <p class="alert alert-warning">Page under construction</p>
+
+        <h1>Recent Games</h1>
+        <ul>
+          <li ng-repeat="game in user.games" ng-hide="{{ game == 'empty' }}">
+            {{ game.players[1].name }} vs {{ game.players[2].name }} 
+            <a href="#/game/multyplayer/{{ game.id }}">Go to game</a>
+          </li>
+        </ul>    
+
+      </div>
+    </div>
+
   </div>
 </div>

@@ -125,4 +125,11 @@ module.exports = function(grunt) {
       'sass', 
       'concat', 
       'watch']);
+
+    grunt.registerTask('build', [ 
+      'nggettext_extract', 
+      'nggettext_compile', 
+      'sass', 
+      'concat', 
+      'watch']);
 };
