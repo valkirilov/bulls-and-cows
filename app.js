@@ -28,6 +28,7 @@ angular.module('myApp', [
   $rootScope.firebaseRef = null;
 
   $rootScope.user = null;
+  $rootScope.isGamesListLoaded = false;
 
   var init = function() {
     $rootScope.firebaseRef = new Firebase($rootScope.firebaseRefURL);

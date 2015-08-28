@@ -1,137 +1,171 @@
 
 
-<!-- <div ng-show="game.gameRef.turn == game.player && game.gameRef.turn != 0">Your Turn</div>
-<div ng-show="game.gameRef.turn != game.player && game.gameRef.turn != 0">Oponent Turn</div> -->
+    <!-- <div ng-show="game.gameRef.turn == game.player && game.gameRef.turn != 0">Your Turn</div>
+    <div ng-show="game.gameRef.turn != game.player && game.gameRef.turn != 0">Oponent Turn</div> -->
 
-<div ng-show="game.player == 1 && game.gameRef.turn == 0">Oponent should  accept and start the game</div>
-<div ng-show="game.player == 2 && game.gameRef.turn == 0">
-  You should  accept and start the game
+<!-- Game still not started -->
+<div class="panel panel-default panel-new-game center-block" ng-show="game.gameRef.status === 0">
+  <div class="panel-body">
 
-  <div>
-    Your number:
-    <br />
-    <input type="number" ng-model="acceptGame.number" maxlength="4" ng-keyup="checkNewGameNumberInput('acceptGame')" />
-  </div>
+    <div ng-show="game.player == 1 && game.gameRef.turn == 0">
+      <div class="alert alert-info">
+        <strong>{{ game.gameRef.players[game.oponent].name }}</strong> {{ 'should accept and start the game. Please wait ^_^' | translate }}
+      </div>
+      <div class="alert alert-warning">Page under dev. Here we should fill it with a little more stuff.</div>
+    </div>
 
-  <div ng-show="acceptGame.isNumberValid">
-    <button class="btn btn-primary btn-lg" ng-click="acceptNewGame(game, acceptGame)">Start Game</button>
+    <div ng-show="game.player == 2 && game.gameRef.turn == 0">
+
+      <h1 class="text-center" data-translate>Accept New Game</h1>
+      
+      <p data-translate>Намислете си четирицифрено число, такова че да затрудните максимално противника ви в опитите му да го разгадае:</p>
+
+      <br />
+      <div class="form-group {{ newGame.isNumberValid ? 'has-success' : '' }}">
+        <input type="number" class="form-control form-input-number"  ng-model="acceptGame.number" maxlength="4" ng-keyup="checkNewGameNumberInput('acceptGame')" placeholder="{{ 'Your 4 digit number' | translate }}" />
+      </div>
+
+      <div ng-show="acceptGame.isNumberValid">
+        <button class="btn btn-success btn-lg center-block" ng-click="acceptNewGame(game, acceptGame)" data-translate>Start Game</button>
+      </div>
+    </div>
+
   </div>
 </div>
-
+    
 <div ng-show="game.gameRef.status == 2">
   <h1 ng-show="game.gameRef.winner == game.player" class="text-center">You WIN!</h1>
   <h1 ng-show="game.gameRef.winner == game.oponent" class="text-center">You LOSE!</h1>
 </div>
 
+<!-- Game board -->
 <div ng-show="game.gameRef.status >= 1">
   <!-- Game block here-->
   <div class="row full-height">
-    <div class="col-sm-4 col-lg-3">
-      
-      <div class="player">
-        <div class="avatar pull-left">
-          <img src="{{ user.avatar }}" class="img img-circle center-block">
-        </div>
-        <div class="details pull-left">
-          <p><strong>{{ user.name }}</strong></p>
-          <p>{{ user.badge }}, Level {{ user.level }}</p>    
-        </div>
 
-        <div class="clearfix"></div>
-        <h3>Your Attempts</h3>
-      </div>
+    <div class="col-sm-12 col-md-8">
+      <div class="panel panel-default panel-game">
+        
+        <div class="panel-heading">
+          <div class="col-sm-5">       
+            <div class="player">
+              <div class="avatar pull-left">
+                <img src="{{ user.avatar }}" class="img img-circle center-block">
+              </div>
+              <div class="details pull-left">
+                <p><strong>{{ user.name }}</strong></p>
+                <p>{{ user.badge }}, Level {{ user.level }}</p>    
+              </div>
+            </div><!-- /player -->
+          </div><!-- /col-sm-5 player1 -->
+          <div class="col-sm-2">
+            <div class="visible-xs big-divider"></div>
+          </div><!-- /col-sm-2 divider -->
+          <div class="col-sm-5">
+            <div class="player">
+              <div class="avatar pull-left">
+                <img src="{{ game.gameRef.players[game.oponent].avatar }}" class="img img-circle center-block">
+              </div>
+              
+              <div class="details pull-left">
+                <p><strong>{{ game.gameRef.players[game.oponent].name }}</strong></p>
+                <p>{{ game.gameRef.players[game.oponent].badge }}, Level {{ game.gameRef.players[game.oponent].level }}</p>
+              </div>
+            </div><!-- /player -->
+          </div><!-- /col-sm-5 player2 -->
+          <div class="clearfix"></div>
+        </div><!-- /input-header -->
+
+        <div class="panel-body">
+
+          <div class="col-sm-5">       
+            <div class="table-attempts">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Number</th>
+                    <th class="text-center">Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="attempt in game.gameRef.players[game.player].attempts" ng-hide="$index == 0">
+                    <td>{{ $index }}</td>
+                    <td>{{ attempt.number }}</td>
+                    <td>{{ attempt.result.bulls }}B {{ attempt.result.cows }}C </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div><!-- /table-attempts -->
+          </div><!-- /col-sm-5 player-1 -->
+          <div class="col-sm-2">
+            <div class="visible-xs big-divider"></div>
+          </div><!-- /col-sm-2 divider -->
+          <div class="col-sm-5">
+            <div class="table-attempts">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Number</th>
+                    <th class="text-center">Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="attempt in game.gameRef.players[game.oponent].attempts" ng-hide="$index == 0">
+                    <td>{{ $index }}</td>
+                    <td>{{ attempt.number }}</td>
+                    <td>{{ attempt.result.bulls }}B {{ attempt.result.cows }}C </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div><!-- /col-sm-5 player-2 -->
+
+        </div><!-- /panel-body -->
+        <div class="panel-footer">
+          <div class="row input-attempt">
+            <form ng-submit="checkNumber(game, checkNumberInput)">
+              <div class="input-group">
+                <input type="text" ng-model="checkNumberInput" class="form-control" placeholder="Guess the number" 
+                    ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit"
+                      ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">Check</button>
+                </span>
+              </div><!-- /input-group -->
+            </form>
+          </div><!-- /input-attempt -->
+        </div><!-- /panel-footer -->
+      </div><!-- /panel-game -->
+    </div><!-- /col-game -->
+    <div class="col-sm-12 col-md-4">
+    
+      <div class="panel panel-default panel-chat">
+        <div class="panel-body">
+          <h3 class="text-center">Chat</h3>
+
+          <div class="messages">
+            <div class="alert alert-danger">This feature is still not available</div>
+
+            <ul>
+              <li><strong>system:</strong> Still not implemented"</li>
+            </ul>
+          </div>
+
+        </div><!-- /panel-body -->
+        <div class="panel-footer">
+          <div class="row input-chat">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Spam here...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Send</button>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /input-chat -->
+        </div><!-- /panel-footer -->
+      </div><!-- /panel-chat -->
+    </div><!-- /col-chat -->
   
-      <div class="table-attempts">
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="text-center">#</th>
-              <th class="text-center">Number</th>
-              <th class="text-center">Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="attempt in game.gameRef.players[game.player].attempts" ng-hide="$index == 0">
-              <td>{{ $index }}</td>
-              <td>{{ attempt.number }}</td>
-              <td>{{ attempt.result.bulls }}B {{ attempt.result.cows }}C </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row input-attempt">
-        <form ng-submit="checkNumber(game, checkNumberInput)">
-          <div class="input-group">
-            <input type="text" ng-model="checkNumberInput" class="form-control" placeholder="Guess the number" 
-              ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="submit"
-                ng-disabled="game.gameRef.turn != game.player && game.gameRef.turn != 0">Check</button>
-            </span>
-          </div><!-- /input-group -->
-        </form>
-      </div>
-    </div>
-    <div class="col-sm-1 col-lg-2">
-      
-      <div class="visible-xs big-divider"></div>
-
-    </div>
-    <div class="col-sm-4 col-lg-3">
-      <div class="player">
-        <div class="avatar pull-left">
-          <img src="{{ game.gameRef.players[game.oponent].avatar }}" class="img img-circle center-block">
-        </div>
-        <div class="details pull-left">
-          <p><strong>{{ game.gameRef.players[game.oponent].name }}</strong></p>
-          <p>{{ game.gameRef.players[game.oponent].badge }}, Level {{ game.gameRef.players[game.oponent].level }}</p>
-        </div>
-
-        <div class="clearfix"></div>
-        <h3>Oponent Attempts</h3>
-      </div>
-
-        <div class="table-attempts">
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="text-center">#</th>
-              <th class="text-center">Number</th>
-              <th class="text-center">Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="attempt in game.gameRef.players[game.oponent].attempts" ng-hide="$index == 0">
-              <td>{{ $index }}</td>
-              <td>{{ attempt.number }}</td>
-              <td>{{ attempt.result.bulls }}B {{ attempt.result.cows }}C </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-    <div class="col-sm-3 col-lg-4 chat">
-      <h3 class="text-center">Chat</h3>
-
-      <div class="messages">
-        <ul>
-          <li><strong>system:</strong> Still not implemented"</li>
-        </ul>
-      </div>
-
-      <div class="row input-chat">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Spam here...">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Send</button>
-          </span>
-        </div><!-- /input-group -->
-      </div>
-
-    </div>
   </div>
-
 </div>

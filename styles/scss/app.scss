@@ -1,7 +1,12 @@
 $max-attempts-height: 450px;
 $player-height: 150px;
 
-$max-chat-height: 544px; /* $max-attempts-height + $player-height - 56 */
+$max-chat-height: 564px; /* $max-attempts-height + $player-height - 56 */
+
+$color-green: #93c54b;
+
+
+/*==========  Mixins  ==========*/
 
 @function calculateRem($size) {
   $remSize: $size / 10px;
@@ -13,13 +18,43 @@ $max-chat-height: 544px; /* $max-attempts-height + $player-height - 56 */
   font-size: calculateRem($size);
 }
 
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+
+/*==========  Main Styles  ==========*/
+
 html,body { 
-  height: 100%; 
+  min-height: 100%; 
   margin: 0px; 
   padding: 0px; 
 }
 
+body {
+  background: url('../images/footer.png') center bottom no-repeat;
+  background-size: contain;
+  padding-bottom: 160px;
+}
+
+.header {
+  background: url('../images/header.png') center top no-repeat;
+  background-size: contain;  
+  position: absolute;
+  width: 100%;
+  height: 544px;
+  display: none;
+}
+
+.navbar-brand {
+  margin-left: 0;
+}
+
 #main-container {
+
   height: 100%;
   position: relative;
 
@@ -29,6 +64,92 @@ html,body {
 .full-height {
   /* height: 100%; */
 }
+
+.inner-padding {
+  padding: 15px;
+}
+
+/*==========  Forms Styles  ==========*/
+
+.form-margin {
+  margin-top: 5px;
+}
+
+.form-error {
+  background-color: #d9534f;
+  border-color: transparent;
+  color: #ffffff; 
+  padding: 15px;
+}
+
+.form-input-number,
+.form-input-user, {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 200px;
+  text-align: center;
+}
+
+.hr-separator {
+  display: table;
+  white-space: nowrap;
+  margin: 20px auto 15px auto;
+  text-transform: uppercase;
+  @include font-size(11px);
+  &:before, &:after {
+    border-top: 1px solid #dddddd;
+    content: '';
+    display: table-cell;
+    position: relative;
+    top: 0.5em;
+    width: 45%;
+  }
+  &:before { right: 1.5%; }
+  &:after { left: 1.5%; }
+}
+
+/*==========  Custom Components Styles  ==========*/
+
+.player-mini-box {
+  padding: 5px 10px 5px 5px;
+  margin: 5px 8px;
+  position: relative;
+  float: left;
+  @include border-radius(5px);
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: #fcfff3;
+    border: 1px solid $color-green;
+  }
+
+  &.selected {
+    background: #fefff8;
+    border: 1px solid $color-green; 
+  }
+
+  img {
+    position: relative;
+    float: left;
+    width: 32px;
+    height: 32px;
+  }
+  p {
+    margin-left: 10px;
+    margin-top: 5px;
+    position: relative;
+    float: left;
+  }
+}
+
+/*==========  Login Styles  ==========*/
+
+.panel-login {
+  margin-top: 30px;
+}
+
+/*==========  Game Styles  ==========*/
 
 .player {
   height: $player-height;
@@ -62,11 +183,10 @@ html,body {
   padding: 30px 20px 0 20px;
 }
 
-.chat {
-  border-left: 3px solid #EFECEC;
-  padding-left: 30px;
+.panel-chat {
 
   .messages {
+    height: $max-chat-height;
     max-height: $max-chat-height;
     overflow-y: auto;
   }
@@ -84,8 +204,25 @@ html,body {
   }
 }
 
-/* Portrait and Landscape */
-@media only screen and (max-width: 768px) {
+.panel-new-game {
+  width: 50%;
+}
+
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
 
   $max-attempts-height: 200px;
   $player-height: 120px;
@@ -101,8 +238,28 @@ html,body {
     overflow-y: auto;
   }
 
-  .chat .messages {
+  .panel-chat .messages {
     max-height: $max-chat-height;
   }
 
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+
+  body {
+    padding-bottom: 100px;
+  }
+
+  /*==========  Game Styles  ==========*/
+
+  .panel-new-game {
+    width: 95%;
+  }
+
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+    
 }

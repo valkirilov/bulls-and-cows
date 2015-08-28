@@ -1,17 +1,49 @@
-New game
 
-<div>
-  Step 1:
-  <br />
-  <input type="number" ng-model="newGame.number" maxlength="4" ng-keyup="checkNewGameNumberInput('newGame')" />
-</div>
+<div class="row">
 
-<div ng-show="newGame.isNumberValid">
-  Step 2:
-  <input type="text" ng-model="newGame.oponent" typeahead="friend.name for friend in friendsList | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedPlayer($item)">
-</div>
+  <div class="panel panel-default panel-new-game center-block">
+    <div class="panel-body">
 
-<div ng-show="newGame.isOponentValid">
-  Step 3:
-  <button class="btn btn-primary btn-lg" ng-click="startNewGame()">Start Game</button>
+      <h1 class="text-center">Start a New Game</h1>
+
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ 'If you are not familar with the rules of the game we suggest you to read them here:' | translate }}
+        <a href="#" class="alert-link" data-translate>How to play Bulls and Cows?</a>
+      </div>
+
+      <form>
+        <p class="hr-separator" data-translate>Step 1</p>
+        <p data-translate>Намислете си четирицифрено число, такова че да затрудните максимално противника ви в опитите му да го разгадае:</p>
+
+        <br />
+        <div class="form-group {{ newGame.isNumberValid ? 'has-success' : '' }}">
+          <input type="number" class="form-control form-input-number" ng-model="newGame.number" maxlength="4" ng-keyup="checkNewGameNumberInput('newGame')" placeholder="{{ 'Your 4 digit number' | translate }}" />
+        </div>
+
+        <div ng-show="newGame.isNumberValid">
+          <p class="hr-separator" data-translate>Step 2</p>
+
+          <div class="form-group {{ newGame.isOponentValid ? 'has-success' : '' }}">
+            <input type="text" class="form-control form-input-user" ng-model="newGame.oponent" typeahead="friend.name for friend in friendsList | filter:$viewValue | limitTo:8" class="form-control" ng-change="checkPlayer()" typeahead-on-select="selectedPlayer($item)" placeholder="{{ 'Oponent name' | translate }}">
+          </div>
+
+          <div class="row inner-padding">
+            <div class="player-mini-box {{ newGame.oponent === user.name ? 'selected' : '' }}" ng-repeat="user in friendsList" ng-click="choosePlayer(user)">
+              <img src="{{ user.avatar }}" class="img img-circle">
+              <p>{{ user.name }}</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div ng-show="newGame.isOponentValid">
+          <p class="hr-separator" data-translate>Step 3</p>
+          <button class="btn btn-success btn-lg center-block" ng-click="startNewGame()" data-translate>Start Game</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
 </div>

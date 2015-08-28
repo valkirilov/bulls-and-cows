@@ -43,16 +43,24 @@ angular.module('myApp.services.auth', [])
     usersList = $firebaseArray(usersRef);
 
     usersList.$loaded(function(data) {
-      //console.log(data);
+      // Filter the date and remove you
+      usersList = data.filter(function(user) {
+        if (user.uid !== $rootScope.user.uid) {
+          return true;
+        }
+      });
     });
   };
 
-  var check = function() {
+  var check = function(isRedirectEnabled) {
     var authData = authObj.$getAuth();
+    isRedirectEnabled = isRedirectEnabled || false;
 
     if (authData) {
       console.log("Logged in as:", authData.uid);
-      $location.path('/profile');
+      if (isRedirectEnabled) {
+        $location.path('/profile');
+      }
 
       // Get the auth user
       var users = firebaseRef.child('users').child(authData.uid);
@@ -79,10 +87,9 @@ angular.module('myApp.services.auth', [])
 
     promise.then(function(authData) {
       console.log("Logged in as:", authData.uid);
-      check();
+      check(true);
     }).catch(function(error) {
-      console.error("Authentication failed:", error);
-      alert(error);
+      console.info("Authentication failed:", error);
     });
 
     return promise;
