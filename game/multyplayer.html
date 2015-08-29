@@ -21,13 +21,15 @@
       <p data-translate>Намислете си четирицифрено число, такова че да затрудните максимално противника ви в опитите му да го разгадае:</p>
 
       <br />
-      <div class="form-group {{ newGame.isNumberValid ? 'has-success' : '' }}">
-        <input type="number" class="form-control form-input-number"  ng-model="acceptGame.number" maxlength="4" ng-keyup="checkNewGameNumberInput('acceptGame')" placeholder="{{ 'Your 4 digit number' | translate }}" />
-      </div>
+      <form>
+        <div class="form-group {{ newGame.isNumberValid ? 'has-success' : '' }}">
+          <input type="number" class="form-control form-input-number"  ng-model="acceptGame.number" maxlength="4" ng-keyup="checkNewGameNumberInput('acceptGame')" placeholder="{{ 'Your 4 digit number' | translate }}" />
+        </div>
 
-      <div ng-show="acceptGame.isNumberValid">
-        <button class="btn btn-success btn-lg center-block" ng-click="acceptNewGame(game, acceptGame)" data-translate>Start Game</button>
-      </div>
+        <div ng-show="acceptGame.isNumberValid">
+          <button class="btn btn-success btn-lg center-block" type="submit" ng-click="acceptNewGame(game, acceptGame)" data-translate>Start Game</button>
+        </div>
+      </form>
     </div>
 
   </div>
@@ -54,8 +56,29 @@
               </div>
               <div class="details pull-left">
                 <p><strong>{{ user.name }}</strong></p>
-                <p>{{ user.badge }}, Level {{ user.level }}</p>    
+                <p>{{ user.badge }}, Level {{ user.level }}</p>
               </div>
+              <p class="attemption">
+
+                <span class="animate-ng icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.bulls >= 1"></span>
+                <span class="animate-ng icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.bulls >= 2"></span>
+                <span class="animate-ng icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.bulls >= 3"></span>
+                <span class="icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.bulls >= 4"></span>
+
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.cows >= 1"></span>
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.cows >= 2"></span>
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.cows >= 3"></span>
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.player].attempts[game.gameRef.players[game.player].attempts.length-1].result.cows >= 4"></span>
+
+              </p><!-- /attemption -->
             </div><!-- /player -->
           </div><!-- /col-sm-5 player1 -->
           <div class="col-sm-2">
@@ -71,6 +94,28 @@
                 <p><strong>{{ game.gameRef.players[game.oponent].name }}</strong></p>
                 <p>{{ game.gameRef.players[game.oponent].badge }}, Level {{ game.gameRef.players[game.oponent].level }}</p>
               </div>
+
+              <p class="attemption">
+
+                <span class="animate-ng icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.bulls >= 1"></span>
+                <span class="animate-ng icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.bulls >= 2"></span>
+                <span class="animate-ng icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.bulls >= 3"></span>
+                <span class="animate-ng icon-animal icon-animal-bull icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.bulls >= 4"></span>
+
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.cows >= 1"></span>
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.cows >= 2"></span>
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.cows >= 3"></span>
+                <span class="animate-ng icon-animal icon-animal-cow icon-animal-green " 
+                  ng-show="game.gameRef.players[game.oponent].attempts[game.gameRef.players[game.oponent].attempts.length-1].result.cows >= 4"></span>
+
+              </p><!-- /attemption -->
             </div><!-- /player -->
           </div><!-- /col-sm-5 player2 -->
           <div class="clearfix"></div>

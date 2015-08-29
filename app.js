@@ -4,6 +4,7 @@
 angular.module('myApp', [
   'ui.router',
   'ngCookies',
+  'ngAnimate',
 
   'myApp.guest',
   'myApp.profile',
@@ -70,7 +71,7 @@ angular.module('myApp', [
       // Redirects and Otherwise //
       /////////////////////////////
       ///
-      //$urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/');
 
       //////////////////////////
       // State Configurations //

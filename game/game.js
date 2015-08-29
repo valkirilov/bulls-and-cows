@@ -53,6 +53,12 @@ angular.module('myApp.game', ['ui.router'])
     }
   };
 
+  $scope.visible = true;
+  $scope.test = function() {
+    $scope.visible = !$scope.visible;
+    console.log($scope.visible);
+  };
+
   /**
    * Chooseing player from the suggestions list
    * @param  {[type]} player [description]
@@ -107,9 +113,13 @@ angular.module('myApp.game', ['ui.router'])
     GameService.newGame($scope.newGame);
   };
 
+  /**
+   * Accept and start a game when the second players enter number
+   * @param  {[type]} game       [description]
+   * @param  {[type]} acceptGame [description]
+   * @return {[type]}            [description]
+   */
   $scope.acceptNewGame = function(game, acceptGame) {
-    console.log(game);
-
     game.gameRef.status = 1;
     game.gameRef.turn = 2;
 
@@ -140,9 +150,7 @@ angular.module('myApp.game', ['ui.router'])
     // Check is the attemp fully correct
     if (result.bulls === 4) {
       console.log('Winner');
-      game.gameRef.turn = 3;
-      game.gameRef.winner = game.player;
-      game.gameRef.status = 2;
+      game = GameService.calculateEndOfGame(game);
     }
 
     GameService.updateGameState(game.gameRef);
