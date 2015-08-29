@@ -12,7 +12,6 @@
     "angular-cookies": "1.2.x",
     "angular-mocks": "~1.2.x",
     "angular-gettext": "~0.2.8",
-    "angular-animate": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
     "restangular": "~1.4.0",
     "bootstrap": "~3.3.5",
@@ -24,6 +23,10 @@
     "angular-cookie": "~4.0.9",
     "momentjs": "~2.10.6",
     "moment": "~2.10.6",
-    "font-awesome": "~4.4.0"
+    "font-awesome": "~4.4.0",
+    "angular-animate": "~1.4.5"
+  },
+  "resolutions": {
+    "angular": "~1.4.4"
   }
 }

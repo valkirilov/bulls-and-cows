@@ -25,6 +25,40 @@ $color-green: #93c54b;
           border-radius: $radius;
 }
 
+// generic transform
+@mixin transform($transforms) {
+     -moz-transform: $transforms;
+       -o-transform: $transforms;
+      -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+          transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+ 
+// scale
+@mixin scale($scale) {
+   @include transform(scale($scale));
+} 
+// translate
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+   @include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+       -o-transform-origin: $origin;
+      -ms-transform-origin: $origin;
+  -webkit-transform-origin: $origin;
+          transform-origin: $origin;
+}
+
 
 /*==========  Main Styles  ==========*/
 
@@ -143,6 +177,34 @@ body {
   }
 }
 
+.icon-animal {
+  width: 64px;
+  height: 64px;
+  background: url('../images/icon-animals.png');
+  display: block;
+  position: relative;
+
+  &.icon-animal-bull {
+    background-position-x: 0px;
+  }
+  &.icon-animal-cow {
+    background-position-x: -64px;
+  }
+
+  &.icon-animal-green {
+    background-position-y: 0px;
+  }
+  &.icon-animal-yellow {
+    background-position-y: -64px;
+  }
+  &.icon-animal-red {
+    background-position-y: -128px;
+  }
+  &.icon-animal-transparent {
+    background-position-y: -192px;
+  }
+}
+
 /*==========  Login Styles  ==========*/
 
 .panel-login {
@@ -163,6 +225,19 @@ body {
 
   .details p {
     margin: 0px;
+  }
+
+  .attemption {
+    position: relative;
+    clear: both;
+
+    span {
+      @include scale(0.6);
+      margin-left: -15px;
+
+      float: left;
+      @include border-radius(100px);
+    }
   }
 }
 
@@ -263,3 +338,16 @@ body {
 @media only screen and (max-width : 320px) {
     
 }
+
+
+
+
+
+
+
+
+/* when hiding the picture */
+.animate-ng.ng-hide-add         { animation:0.5s bounceOut ease; }
+
+/* when showing the picture */
+.animate-ng.ng-hide-remove      { animation:0.5s bounceIn ease; }

@@ -21,14 +21,17 @@ angular.module('myApp.services.game', [])
 
   };
 
+  /**
+   * Create a new game
+   * @param  {[type]} game [description]
+   * @return {[type]}      [description]
+   */
   var newGame = function(game) {
     
     var emptyArray = [];
     emptyArray.push(1);
 
     game.players[1].attempts = game.players[2].attempts = emptyArray;
-
-    console.log(game);
 
     var promise = gamesList.$add(game);
 
@@ -57,6 +60,11 @@ angular.module('myApp.services.game', [])
     });
   };
 
+  /**
+   * Load a specific game by its id
+   * @param  {[type]} gameId [description]
+   * @return {[type]}        [description]
+   */
   var loadGame = function(gameId) {
     var gameRef = gamesList.$getRecord(gameId);
 
@@ -73,6 +81,39 @@ angular.module('myApp.services.game', [])
 
   var updateGameState = function(game) {
     gamesList.$save(game);
+  };
+
+  /**
+   * Calculate the end of the game
+   * @param  {[type]} game [description]
+   * @return {[type]}      [description]
+   */
+  var calculateEndOfGame = function(game) {
+
+    game.gameRef.turn = 3;
+    game.gameRef.winner = game.player;
+    game.gameRef.status = 2;
+
+    // Define some magic vars
+    var winnerXpBonus = 600;
+    var loserXpBonus = 200;
+
+    // Calculate player xp gained
+    var playerAttempts = game.gameRef.players[game.player].attempts.length,
+        playerDifferenceInLevels = game.gameRef.players[game.oponent].level - game.gameRef.players[game.player].level,
+        playerXpGained = winnerXpBonus + playerAttempts + ((playerDifferenceInLevels > 0) ? playerDifferenceInLevels * 50 : 0);
+
+    // Calculate oponent xp gained
+    var oponentAttempts = game.gameRef.players[game.oponent].attempts.length,
+        oponentXpGained = loserXpBonus + oponentAttempts;
+
+    game.gameRef.players[game.player].xpGained = playerXpGained;
+    game.gameRef.players[game.oponent].xpGained = oponentXpGained;
+
+    AuthService.updatePlayerXp(game.gameRef.players[game.player].uid, playerXpGained);
+    AuthService.updatePlayerXp(game.gameRef.players[game.oponent].uid, oponentXpGained);
+
+    return game;
   };
 
   var checkNumber = function(game, number) {
@@ -170,6 +211,7 @@ angular.module('myApp.services.game', [])
     newGame: newGame,
     loadGame: loadGame,
     updateGameState: updateGameState,
-    checkNumber: checkNumber
+    checkNumber: checkNumber,
+    calculateEndOfGame: calculateEndOfGame,
   };
 });

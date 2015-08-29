@@ -6,7 +6,8 @@ angular.module('myApp.services.auth', [])
   var firebaseRef,
       usersRef,
       authObj,
-      usersList;
+      usersList,
+      friendsList;
 
   var isNewUser = false;
 
@@ -26,6 +27,7 @@ angular.module('myApp.services.auth', [])
           registered: currentDate,
           xp: 100,
           level: 1,
+          nextLevel: getNextLevelXp(1),
           avatar: authData.password.profileImageURL,
           email: authData.password.email,
           gamesWon: 0,
@@ -44,7 +46,7 @@ angular.module('myApp.services.auth', [])
 
     usersList.$loaded(function(data) {
       // Filter the date and remove you
-      usersList = data.filter(function(user) {
+      friendsList = data.filter(function(user) {
         if (user.uid !== $rootScope.user.uid) {
           return true;
         }
@@ -67,6 +69,9 @@ angular.module('myApp.services.auth', [])
       var user = $firebaseObject(users);
       user.$loaded(function(data) {
         $rootScope.user = data;
+        
+        // Calculate some things
+        $rootScope.user.progress = parseInt((data.xp / data.nextLevel) * 100);
       });
     } else {
       console.log("Logged out");
@@ -125,7 +130,7 @@ angular.module('myApp.services.auth', [])
   };
 
   var getFriends = function() {
-    return usersList;
+    return friendsList;
   };
 
   var sendGameNotification = function(notification) {
@@ -153,6 +158,31 @@ angular.module('myApp.services.auth', [])
     return player;
   };
 
+  /**
+   * Functin which is updating the xp and level of the player
+   * Used when game is finished to recalculate the user stats
+   * @param  {[type]} playerId       [description]
+   * @param  {[type]} gainedXp       [description]
+   * @param  {[type]} updateProgress [description]
+   * @return {[type]}                [description]
+   */
+  var updatePlayerXp = function(playerId, gainedXp, updateProgress) {
+    updateProgress = updateProgress || false;
+
+    // Get the player
+    var playerRef = usersList.$getRecord(playerId);
+
+      playerRef.xp += gainedXp;
+      playerRef.level = getLevelForXp(playerRef.xp);
+      playerRef.nextLevel = getNextLevelXp(playerRef.level);
+
+      if (updateProgress) {
+        $rootScope.user.progress = parseInt((playerRef.xp / playerRef.nextLevel) * 100);
+      }
+
+      usersList.$save(playerRef);
+  };
+
   function getName(authData) {
     switch(authData.provider) {
        case 'password':
@@ -163,6 +193,47 @@ angular.module('myApp.services.auth', [])
          return authData.facebook.displayName;
     }
   }
+
+  // Levels constants
+  var LEVELS_XP = {
+    1: 1000,
+    2: 2500,
+    3: 5000,
+    4: 7500,
+    5: 10000,
+    6: 15000,
+    7: 21000,
+    8: 27000,
+    9: 35000,
+    10: 35000,
+  };
+
+  var getLevelForXp = function(xp) {
+    if (xp < LEVELS_XP[1])
+      return 1;
+    else if (xp < LEVELS_XP[2])
+      return 2;
+    else if (xp < LEVELS_XP[3])
+      return 3;
+    else if (xp < LEVELS_XP[4])
+      return 4;
+    else if (xp < LEVELS_XP[5])
+      return 5;
+    else if (xp < LEVELS_XP[6])
+      return 6;
+    else if (xp < LEVELS_XP[7])
+      return 7;
+    else if (xp < LEVELS_XP[8])
+      return 8;
+    else if (xp < LEVELS_XP[9])
+      return 9;
+    else if (xp >= LEVELS_XP[9])
+      return 10;
+  };
+
+  var getNextLevelXp = function(level) {
+    return LEVELS_XP[level];
+  };
 
   return {
     init: init,
@@ -176,6 +247,9 @@ angular.module('myApp.services.auth', [])
     sendGameNotification: sendGameNotification,
     addNewGame: addNewGame,
 
-    getPlayerFromUser: getPlayerFromUser
+    getPlayerFromUser: getPlayerFromUser,
+    updatePlayerXp: updatePlayerXp,
+    getNextLevelXp: getNextLevelXp,
+    getLevelForXp: getLevelForXp
   };
 });
